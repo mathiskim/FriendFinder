@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Survey Page</title>
+
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h1 class="text-center"><span class="glyphicon glyphicon-heart"></span> Friend Finder</h1>
+      <hr>
+      <br>
+    </div>
+
+      
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- Reservation Page -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title">Survey Questions</h1>
+            <h4 class="text-center">Answer the questions honestly to find the most compatible friend</h4>
+          </div>
+          <div class="panel-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="user-name">Your Name</label>
+                <input type="text" class="form-control" id="user-name">
+              </div>
+
+              <div class="form-group">
+                <label for="user-pic">Link to a photograph of yourself (Required)</label>
+                <input type="text" class="form-control" id="user-pic">
+              </div>
+            </form>
+          </div>
+        </div>
+
+   <form id="form">
+    <div id='firstQuestion'>
+    <h3>First Question.</h3>
+        <input type='radio' id='radio_1' name='1' value='1' />Necktie 
+        <input type='radio' id='radio_2' name='1' value= '2' />Ballpoint Pen
+        <input type='radio' id='radio_3' name='1' value= '3' />Box Office
+      <input type='radio' id='radio_4' name='1' value= '4'/>Chain Saw <br> 
+      Strongly Agree
+    </div>
+    
+    <div id='secondQuestion'>
+    <h3>SecondQuestion</h3>
+        <input type='radio' id='radio_5' name='2' value='a' />Cottage Cheese
+        <input type='radio' id='radio_6' name='2' value= 'b' />Whipped Cream
+        <input type='radio' id='radio_7' name='2' value= 'c' />Butter
+        <input type='radio' id='radio_8' name='2' value= 'd'/>Yogurt
+    </div>
+
+    <div id='thirdQuestion'>
+      <h3>thirdQuestion</h3>
+        <input type='radio' id='radio_9' name='3' value='a' />Ice Cream Topping
+        <input type='radio' id='radio_10' name='3' value= 'b' />Sun Tan Lotion
+        <input type='radio' id='radio_11' name='3' value= 'c' />Dog Treat
+      <input type='radio' id='radio_12' name='3' value= 'd'/>Sugar Substitute
+    </div>
+
+    <div id='fourthQuestion'>
+      <h3>'fourthQuestion</h3>
+        <input type='radio' id='radio_13' name='4' value='a' />Dating Service
+        <input type='radio' id='radio_14' name='4' value= 'b' />Weight Loss Pills
+        <input type='radio' id='radio_15' name='4' value= 'c' />Computer
+      <input type='radio' id='radio_16' name='4' value= 'd'/>Investment Newsletter
+    </div>
+
+    <div id='fifthQuestion'>
+      <h3>fifthQuestion</h3>
+        <input type='radio' id='radio_17' name='5' value='a' />+100
+        <input type='radio' id='radio_18' name='5' value= 'b' />0
+        <input type='radio' id='radio_19' name='5' value= 'c' />-40
+      <input type='radio' id='radio_20' name='5' value= 'd'/>40
+    </div>
+   </form>
+   
+<!--     <button id="submit">Submit Anwers</button> -->
+     <button type="button" id="submit" class="btn btn-info">Submit</button>
+
+
+    <footer class="footer">
+      <div class="container">
+        <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/afhaque/HotRestaurant">GitHub Repo</a></p>
+      </div>
+    </footer>
+
+    <!-- Modal 
+  <div id="resultsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">  -->
+
+      <!-- Modal content
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title"><strong>Best Match</strong></h2>
+        </div>
+        <div class="modal-body">
+          <h2 id="matchName"></h2>
+          <img id="matchImg" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>  -->
+
+
+   <!-- jQuery -->
+  
+
+</body>
+</html>
+
+<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
+<script type="text/javascript">
+
+    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+    // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+    // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+    // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+    var playerAnswers = ['','','','',''];
+
+    $("#submit").on("click", function(event) {
+      event.preventDefault(); 
+      alert("name " + $('#user-name').val());
+      alert("link " + $('#user-pic').val());
+      if ($("#user-name").val() === '' || $("#user-pic").val() === '' ) {
+          alert("Please fill in both name and image link.");
+      }
+
+     
+       $('input:radio:checked').each(function () {       
+        var $this = $(this),
+          //    id = $this.attr('id'),
+              value = $this.attr('value');
+              name = $this.attr('name');
+              playerAnswers[name - 1] = value;
+    });  
+       alert(playerAnswers);
+ });
+
+
+      // Here we grab the form elements
+/*      var newReservation = {
+        customerName: $("#reserve-name").val().trim(),
+        phoneNumber: $("#reserve-phone").val().trim(),
+        customerEmail: $("#reserve-email").val().trim(),
+        customerID: $("#reserve-unique-id").val().trim()
+      };
+
+      console.log(newReservation);  */
+
+      // This line is the magic. It"s very similar to the standard ajax function we used.
+      // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+      // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+      // depending on if a tables is available or not.
+
+   /*   $.post("/api/tables", newReservation,
+        function(data) {
+
+          // If a table is available... tell user they are booked.
+          if (data) {
+            alert("Yay! You are officially booked!");
+          }
+
+          // If a table is available... tell user they on the waiting list.
+          else {
+            alert("Sorry you are on the wait list");
+          }
+
+          // Clear the form when submitting
+          $("#reserve-name").val("");
+          $("#reserve-phone").val("");
+          $("#reserve-email").val("");
+          $("#reserve-unique-id").val("");  *
+
+        });  */
+
+
+
+</script>
+
